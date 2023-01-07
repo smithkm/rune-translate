@@ -47,3 +47,19 @@ test('Case insensitive', ()=> {
 
     expect(result).toBe('\u16E0\u16D2\u16DD\u16A0');
 }) 
+
+test('Digraph overlap', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("eee");
+
+    expect(result).toBe('\u16DD\u16D6');
+})
+
+test('Adjacent digraphs', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("eeee");
+
+    expect(result).toBe('\u16DD\u16DD');
+})
