@@ -39,3 +39,11 @@ test('Word with digraph rune', ()=> {
 
     expect(result).toBe('\u16E0');
 }) 
+
+test('Case insensitive', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("eAbEEF");
+
+    expect(result).toBe('\u16E0\u16D2\u16DD\u16A0');
+}) 

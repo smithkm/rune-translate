@@ -90,9 +90,13 @@ class RuneTranslator {
     private wordMap: Map<string, string>;
     private runeMap: Map<string, string>;
 
+    private runeRegexp: RegExp;
+
     constructor(runeMap: Map<string, string>, wordMap: Map<string, string>) {
         this.runeMap = runeMap;
         this.wordMap = wordMap;
+
+        this.runeRegexp = new RegExp(Array.from(this.runeMap.keys()).sort((key1,key2)=>key2.length-key1.length).map(key=>`${key}`).join("|")+"|\w", 'gi');
     }
 
     public static sosarian(){
@@ -104,8 +108,6 @@ class RuneTranslator {
     }
 
     public translateWord(word: string): string {
-        let regexp = new RegExp(Array.from(this.runeMap.keys()).sort((key1,key2)=>key2.length-key1.length).map(key=>`${key}`).join("|")+"|\w", 'gi')
-
-        return word.replace(regexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
+        return word.replace(this.runeRegexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
     }
 }
