@@ -87,9 +87,22 @@ const SOSARIAN_WORD_MAP:Map<string,string> = new Map<string,string>([
 ]);
 
 interface Token {
-    type: "word"|"space"|"punctuation";
+    type: "word"|"space"|"punctuation"|"unknown";
     value: string;
 }
+
+const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[.:!?]\s*)|(\s+)/ig
+
+function scan (s: string, re: RegExp) {
+    if (!re.global) throw "ducks";
+    var m, r = [];
+    while (m = re.exec(s)) {
+        r.push(m);
+    }
+    return r;
+};
+
+const TOKEN_TYPES = ["word", "punctuation", "space"]
 
 class RuneTranslator {
     private wordMap: Map<string, string>;
@@ -117,6 +130,19 @@ class RuneTranslator {
     }
 
     public splitWords(input: string): Token[]{
-        return [];
+        return scan(input, TOKEN_REGEXP).map(match=>{
+            for(let i=0; i<TOKEN_TYPES.length; i++){
+                if(match[i+1]) {
+                    return <Token> {
+                        type: TOKEN_TYPES[i],
+                        value: match[i+1]
+                    }
+                }
+            }
+            return <Token>{
+                type: "unknown",
+                value: match[0]
+            }
+        });
     }
 }

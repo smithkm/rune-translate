@@ -5,5 +5,13 @@ test('Empty string', ()=> {
 
     let result:Token[] = translator.splitWords("");
 
-    expect(result).toEqual([]);
+    expect(result).toStrictEqual([]);
+}) 
+
+test('One word', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result:Token[] = translator.splitWords("blah");
+
+    expect(result).toStrictEqual([{type:"word", value:"blah"}]);
 }) 
