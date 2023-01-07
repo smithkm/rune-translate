@@ -31,3 +31,11 @@ test('Word with unknown character', ()=> {
 
     expect(result).toBe('2');
 })
+
+test('Word with digraph rune', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("ea");
+
+    expect(result).toBe('\u16E0');
+}) 

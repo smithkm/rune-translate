@@ -104,7 +104,7 @@ class RuneTranslator {
     }
 
     public translateWord(word: string): string {
-        let regexp = new RegExp(Array.from(this.runeMap.keys()).map(key=>`${key}`).join("|")+"|\w", 'gi')
+        let regexp = new RegExp(Array.from(this.runeMap.keys()).sort((key1,key2)=>key2.length-key1.length).map(key=>`${key}`).join("|")+"|\w", 'gi')
 
         return word.replace(regexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
     }
