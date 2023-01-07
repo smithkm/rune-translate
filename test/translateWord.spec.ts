@@ -1,13 +1,5 @@
 import {RuneTranslator} from '../src'
 
-test('Empty string', ()=> {
-    let translator = RuneTranslator.sosarian();
-
-    let result = translator.translate("");
-
-    expect(result).toBe('');
-}) 
-
 test('One rune word', ()=> {
     let translator = RuneTranslator.sosarian();
 

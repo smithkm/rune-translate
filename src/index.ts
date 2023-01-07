@@ -1,5 +1,5 @@
 
-export {RuneTranslator}
+export {RuneTranslator, Token}
 
 const VS14 =   "\uFE0D"
 
@@ -86,6 +86,11 @@ const SOSARIAN_RUNE_MAP:Map<string,string> = new Map<string,string>([
 const SOSARIAN_WORD_MAP:Map<string,string> = new Map<string,string>([
 ]);
 
+interface Token {
+    type: "word"|"space"|"punctuation";
+    value: string;
+}
+
 class RuneTranslator {
     private wordMap: Map<string, string>;
     private runeMap: Map<string, string>;
@@ -109,5 +114,9 @@ class RuneTranslator {
 
     public translateWord(word: string): string {
         return word.replace(this.runeRegexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
+    }
+
+    public splitWords(input: string): Token[]{
+        return [];
     }
 }
