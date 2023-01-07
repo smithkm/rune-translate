@@ -1,0 +1,29 @@
+{
+  "name": "rune-translate",
+  "version": "1.0.0",
+  "description": "Translate into runes from the Ultima games",
+  "main": "src/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc --module commonjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smithkm/rune-translate.git"
+  },
+  "author": "Kevin Smith",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/smithkm/rune-translate/issues"
+  },
+  "homepage": "https://github.com/smithkm/rune-translate#readme",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  }
+}
