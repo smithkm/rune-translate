@@ -55,3 +55,11 @@ test('Adjacent digraphs', ()=> {
 
     expect(result).toBe('\u16DD\u16DD');
 })
+
+test('Use wordmap', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("Moonglow");
+
+    expect(result).toBe('ᛗᚩᚩᚾᚷᛚᚩᚻ'); // Should not be ᛗᚩᚩᛟᛚᚩᚻ
+})

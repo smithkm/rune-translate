@@ -83,7 +83,9 @@ const SOSARIAN_RUNE_MAP:Map<string,string> = new Map<string,string>([
     ['EA',  EAR]
 ]);
 
+
 const SOSARIAN_WORD_MAP:Map<string,string> = new Map<string,string>([
+    ["moonglow","ᛗᚩᚩᚾᚷᛚᚩᚻ"]
 ]);
 
 interface Token {
@@ -105,22 +107,33 @@ function scan (s: string, re: RegExp) {
 const TOKEN_TYPES = ["word", "punctuation", "space"]
 
 class RuneTranslator {
+
     private wordMap: Map<string, string>;
     private runeMap: Map<string, string>;
 
     private runeRegexp: RegExp;
 
-    constructor(runeMap: Map<string, string>, wordMap: Map<string, string>) {
+    constructor(runeMap: Map<string, string>, wordMap: Map<string, string>|string[]) {
         this.runeMap = runeMap;
-        this.wordMap = wordMap;
 
         this.runeRegexp = new RegExp(Array.from(this.runeMap.keys()).sort((key1,key2)=>key2.length-key1.length).map(key=>`${key}`).join("|")+"|\w", 'gi');
+
+        if (wordMap instanceof Map) {
+            this.wordMap = wordMap;
+        } else {
+            let sepRegexp = /\:/g
+            this.wordMap = new Map<string,string>(wordMap.map(template=>[
+                template.replace(sepRegexp,'').toLowerCase(),
+                RuneTranslator.doTranslateWord(template, this.runeRegexp, this.runeMap).replace(sepRegexp,'')
+            ]));
+        }
 
         this.trimEndToken = token=>["space","punctuation"].includes(token?.type)
         this.trimStartToken = token=>["space","punctuation"].includes(token?.type)
 
         this.translateSpace = token=>'᛫';
         this.translatePunctuation = token=>'᛫᛫';
+
     }
 
     public static sosarian(){
@@ -159,7 +172,12 @@ class RuneTranslator {
     }
 
     public translateWord(word: string): string {
-        return word.replace(this.runeRegexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
+        const newLocal = this.wordMap.get(word.toLowerCase())
+        return newLocal ?? RuneTranslator.doTranslateWord(word, this.runeRegexp, this.runeMap);
+    }
+
+    private static doTranslateWord(word: string, regexp: RegExp, runeMap: Map<string, string>) :string {
+        return word.replace(regexp, match=>runeMap.get(match.toUpperCase()) ?? match);
     }
 
     public splitWords(input: string): Token[]{
