@@ -122,12 +122,19 @@ class RuneTranslator {
     }
 
     translate(input: string): string {
-        return this.splitWords(input).map(token=>{
+        let tokens = this.splitWords(input)
+        // Remove trailing space or punctuation
+        while(["punctuation", "space"].includes(tokens[tokens.length-1]?.type)) {
+            tokens.pop();
+        }
+        return tokens.map(token=>{
             switch(token.type){
                 case "word":
                     return this.translateWord(token.value);
                 case "space":
                     return '᛫';
+                case "punctuation":
+                    return '᛫᛫';
                 default:
                     return token.value;
             }
