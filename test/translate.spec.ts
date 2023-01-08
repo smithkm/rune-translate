@@ -23,3 +23,11 @@ test('Two words', ()=> {
 
     expect(result).toBe('ᛋᚩᛋᚫᚱᛁᚫ᛫ᚱᚢᚾᛖᛋ');
 })
+
+test('Two sentances', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translate("Sosaria runes. Another sentance.");
+
+    expect(result).toBe('ᛋᚩᛋᚫᚱᛁᚫ᛫ᚱᚢᚾᛖᛋ᛫᛫ᚫᚾᚩᚦᛖᚱ᛫ᛋᛖᚾᛏᚫᚾᚳᛖ');
+})
