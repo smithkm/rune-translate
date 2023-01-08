@@ -84,9 +84,7 @@ const SOSARIAN_RUNE_MAP:Map<string,string> = new Map<string,string>([
 ]);
 
 
-const SOSARIAN_WORD_MAP:Map<string,string> = new Map<string,string>([
-    ["moonglow","ᛗᚩᚩᚾᚷᛚᚩᚻ"]
-]);
+const SOSARIAN_WORD_TEMPLATES = ["moon:glow"];
 
 interface Token {
     type: "word"|"space"|"punctuation"|"unknown";
@@ -137,7 +135,7 @@ class RuneTranslator {
     }
 
     public static sosarian(){
-        return new RuneTranslator(SOSARIAN_RUNE_MAP, SOSARIAN_WORD_MAP)
+        return new RuneTranslator(SOSARIAN_RUNE_MAP, SOSARIAN_WORD_TEMPLATES)
     }
 
     private trimStartToken: (token:Token)=>boolean;
