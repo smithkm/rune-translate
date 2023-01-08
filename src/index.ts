@@ -115,26 +115,37 @@ class RuneTranslator {
         this.wordMap = wordMap;
 
         this.runeRegexp = new RegExp(Array.from(this.runeMap.keys()).sort((key1,key2)=>key2.length-key1.length).map(key=>`${key}`).join("|")+"|\w", 'gi');
+
+        this.trimEndToken = token=>["space","punctuation"].includes(token?.type)
+        this.trimStartToken = token=>["space","punctuation"].includes(token?.type)
     }
 
     public static sosarian(){
         return new RuneTranslator(SOSARIAN_RUNE_MAP, SOSARIAN_WORD_MAP)
     }
 
+    private trimStartToken: (token:Token)=>boolean;
+    private trimEndToken: (token:Token)=>boolean;
+
     translate(input: string): string {
         let tokens = this.splitWords(input)
-        // Remove trailing space or punctuation
-        while(["punctuation", "space"].includes(tokens[tokens.length-1]?.type)) {
+        
+        // Remove leading/trailing space or punctuation
+        while(this.trimEndToken(tokens[tokens.length-1])) {
             tokens.pop();
         }
+        while(this.trimStartToken(tokens[0])) {
+            tokens.shift();
+        }
+
         return tokens.map(token=>{
             switch(token.type){
                 case "word":
                     return this.translateWord(token.value);
                 case "space":
-                    return '᛫';
+                    return this.translateSpace(token.value);
                 case "punctuation":
-                    return '᛫᛫';
+                    return this.translatePunctuation(token.value);
                 default:
                     return token.value;
             }
@@ -143,6 +154,12 @@ class RuneTranslator {
 
     public translateWord(word: string): string {
         return word.replace(this.runeRegexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
+    }
+    public translatePunctuation(punct: string): string {
+        return '᛫᛫';
+    }
+    public translateSpace(punct: string): string {
+        return '᛫';
     }
 
     public splitWords(input: string): Token[]{
