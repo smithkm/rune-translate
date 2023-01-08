@@ -31,3 +31,11 @@ test('Two sentances', ()=> {
 
     expect(result).toBe('ᛋᚩᛋᚫᚱᛁᚫ᛫ᚱᚢᚾᛖᛋ᛫᛫ᚫᚾᚩᚦᛖᚱ᛫ᛋᛖᚾᛏᚫᚾᚳᛖ');
 })
+
+test("With irregular words", ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translate("The rearrangement's mistranslated asthma in Moonglow.");
+
+    expect(result).toBe('ᚦᛖ᛫ᚱᛖᚫᚱᚱᚫᚾᚷᛖᛗᛖᚾᛏᛋ᛫ᛗᛁᛋᛏᚱᚫᚾᛋᛚᚫᛏᛖᛞ᛫ᚫᛋᚦᛗᚫ᛫ᛁᚾ᛫ᛗᚩᚩᚾᚷᛚᚩᚻ');
+})

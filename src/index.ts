@@ -1,5 +1,6 @@
 
 export {RuneTranslator, Token}
+import {IGNORE_DIGRAPHS_TEMPLATES} from "./digraphs"
 
 const VS14 =   "\uFE0D"
 
@@ -80,11 +81,11 @@ const SOSARIAN_RUNE_MAP:Map<string,string> = new Map<string,string>([
     ['NG',  ETHEL],
     ['ST',  STAN],
     ['TH',  THORN],
-    ['EA',  EAR]
+    ['EA',  EAR],
+
+    ['\'', ''],
+    ['-', '᛫']
 ]);
-
-
-const SOSARIAN_WORD_TEMPLATES = ["moon:glow"];
 
 interface Token {
     type: "word"|"space"|"punctuation"|"unknown";
@@ -135,7 +136,7 @@ class RuneTranslator {
     }
 
     public static sosarian(){
-        return new RuneTranslator(SOSARIAN_RUNE_MAP, SOSARIAN_WORD_TEMPLATES)
+        return new RuneTranslator(SOSARIAN_RUNE_MAP, IGNORE_DIGRAPHS_TEMPLATES)
     }
 
     private trimStartToken: (token:Token)=>boolean;

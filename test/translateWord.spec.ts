@@ -63,3 +63,19 @@ test('Use wordmap', ()=> {
 
     expect(result).toBe('ᛗᚩᚩᚾᚷᛚᚩᚻ'); // Should not be ᛗᚩᚩᛟᛚᚩᚻ
 })
+
+test('Hyphenated word', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("hyphenated-word");
+
+    expect(result).toBe('ᚹᚣᛕᚹᛖᚾᚫᛏᛖᛞ᛫ᚻᚩᚱᛞ');
+})
+
+test('Posessive', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("Kevin's");
+
+    expect(result).toBe('ᛱᛖᚢ︍ᛁᚾᛋ');
+})
