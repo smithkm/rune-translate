@@ -122,7 +122,16 @@ class RuneTranslator {
     }
 
     translate(input: string): string {
-        return input;  
+        return this.splitWords(input).map(token=>{
+            switch(token.type){
+                case "word":
+                    return this.translateWord(token.value);
+                case "space":
+                    return '᛫';
+                default:
+                    return token.value;
+            }
+        }).join('');
     }
 
     public translateWord(word: string): string {
