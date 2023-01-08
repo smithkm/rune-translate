@@ -118,6 +118,9 @@ class RuneTranslator {
 
         this.trimEndToken = token=>["space","punctuation"].includes(token?.type)
         this.trimStartToken = token=>["space","punctuation"].includes(token?.type)
+
+        this.translateSpace = token=>'᛫';
+        this.translatePunctuation = token=>'᛫᛫';
     }
 
     public static sosarian(){
@@ -126,6 +129,9 @@ class RuneTranslator {
 
     private trimStartToken: (token:Token)=>boolean;
     private trimEndToken: (token:Token)=>boolean;
+
+    private translateSpace: (value:string)=>string;
+    private translatePunctuation: (value:string)=>string;
 
     translate(input: string): string {
         let tokens = this.splitWords(input)
@@ -154,12 +160,6 @@ class RuneTranslator {
 
     public translateWord(word: string): string {
         return word.replace(this.runeRegexp, match=>this.runeMap.get(match.toUpperCase()) ?? match);
-    }
-    public translatePunctuation(punct: string): string {
-        return '᛫᛫';
-    }
-    public translateSpace(punct: string): string {
-        return '᛫';
     }
 
     public splitWords(input: string): Token[]{
