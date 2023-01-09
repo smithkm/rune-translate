@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "tsc --module es6",
+    "build": "tsc --module commonjs",
     "test": "jest"
   },
   "repository": {
