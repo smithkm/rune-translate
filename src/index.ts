@@ -93,14 +93,15 @@ interface Token {
 
 const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[.:!?]\s*)|(\s+)/gi;
 
-function scan(s: string, re: RegExp) {
-    if (!re.global) throw 'ducks';
-    var m,
-        r = [];
-    while ((m = re.exec(s))) {
-        r.push(m);
+function scan(value: string, regex: RegExp) {
+    if (!regex.global) throw new Error("Scanning must be done with a global regex");
+    let match;
+    const result = [];
+    // tslint:disable-next-line:no-conditional-assignment
+    while ((match = regex.exec(value))) {
+        result.push(match);
     }
-    return r;
+    return result;
 }
 
 const TOKEN_TYPES = ['word', 'punctuation', 'space'];
@@ -125,7 +126,7 @@ class RuneTranslator {
         if (wordMap instanceof Map) {
             this.wordMap = wordMap;
         } else {
-            let sepRegexp = /\:/g;
+            const sepRegexp = /\:/g;
             this.wordMap = new Map<string, string>(
                 wordMap.map((template) => [
                     template.replace(sepRegexp, '').toLowerCase(),
@@ -152,7 +153,7 @@ class RuneTranslator {
     private translatePunctuation: (value: string) => string;
 
     translate(input: string): string {
-        let tokens = this.splitWords(input);
+        const tokens = this.splitWords(input);
 
         // Remove leading/trailing space or punctuation
         while (this.trimEndToken(tokens[tokens.length - 1])) {
@@ -191,16 +192,16 @@ class RuneTranslator {
         return scan(input, TOKEN_REGEXP).map((match) => {
             for (let i = 0; i < TOKEN_TYPES.length; i++) {
                 if (match[i + 1]) {
-                    return <Token>{
+                    return {
                         type: TOKEN_TYPES[i],
                         value: match[i + 1],
-                    };
+                    } as Token;
                 }
             }
-            return <Token>{
+            return {
                 type: 'unknown',
                 value: match[0],
-            };
+            } as Token;
         });
     }
 }
