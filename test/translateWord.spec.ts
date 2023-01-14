@@ -55,3 +55,27 @@ test('Adjacent digraphs', ()=> {
 
     expect(result).toBe('\u16DD\u16DD');
 })
+
+test('Use wordmap', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("Moonglow");
+
+    expect(result).toBe('ᛗᚩᚩᚾᚷᛚᚩᚻ'); // Should not be ᛗᚩᚩᛟᛚᚩᚻ
+})
+
+test('Hyphenated word', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("hyphenated-word");
+
+    expect(result).toBe('ᚹᚣᛕᚹᛖᚾᚫᛏᛖᛞ᛫ᚻᚩᚱᛞ');
+})
+
+test('Posessive', ()=> {
+    let translator = RuneTranslator.sosarian();
+
+    let result = translator.translateWord("Kevin's");
+
+    expect(result).toBe('ᛱᛖᚢ︍ᛁᚾᛋ');
+})
