@@ -49,7 +49,7 @@ const TOLKIEN_OO = '\u16F3';
 
 const SOSARIAN_V = `${URUZ}${VS14}`;
 
-const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
+const BASIC_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['A', AESC],
     ['B', BEORC],
     ['C', CEN],
@@ -57,7 +57,7 @@ const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['E', EHWAZ],
     ['F', FEOH],
     ['G', GEBO],
-    ['H', WYNN],
+    ['H', HAEGL],
     ['I', ISAZ],
     ['J', GER],
     ['K', TOLKIEN_K],
@@ -72,18 +72,34 @@ const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['T', TYR],
     ['U', URUZ],
     ['V', SOSARIAN_V],
-    ['W', HAEGL],
+    ['W', WYNN],
     ['X', CALC],
     ['Y', YR],
     ['Z', ALGIZ],
+
+    ["'", ''],
+    ['-', '᛫'],
+]);
+
+const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
+    ...BASIC_RUNE_MAP,
+    // Swap W and H
+    ['H', WYNN],
+    ['W', HAEGL],
+    // Add digraphs
     ['EE', ING],
     ['NG', ETHEL],
     ['ST', STAN],
     ['TH', THORN],
-    ['EA', EAR],
+    ['EA', EAR]
+]);
 
-    ["'", ''],
-    ['-', '᛫'],
+const NOVIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
+    ...BASIC_RUNE_MAP,
+    ['J', IOR],
+    ['K', KAUNA],
+    ['P', PEORTH],
+    ['S', SOWILO]
 ]);
 
 interface Token {
@@ -144,6 +160,10 @@ class RuneTranslator {
 
     public static sosarian() {
         return new RuneTranslator(SOSARIAN_RUNE_MAP, IGNORE_DIGRAPHS_TEMPLATES);
+    }
+
+    public static novian() {
+        return new RuneTranslator(NOVIAN_RUNE_MAP, new Map());
     }
 
     private trimStartToken: (token: Token) => boolean;
