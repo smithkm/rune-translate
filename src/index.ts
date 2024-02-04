@@ -49,6 +49,35 @@ const TOLKIEN_OO = '\u16F3';
 
 const SOSARIAN_V = `${URUZ}${VS14}`;
 
+const OPHIDIAN_A = '\uE5E2';
+const OPHIDIAN_B = '\uE5E3\uE5E1';
+const OPHIDIAN_C = '\uE5E1\uE5E3';
+const OPHIDIAN_D = '\uE5E0';
+const OPHIDIAN_E = '\uE5E4';
+const OPHIDIAN_F = '\uE5E7\uE5E5';
+const OPHIDIAN_G = '\uE5E5\uE5E7';
+const OPHIDIAN_H = '\uE5E6';
+const OPHIDIAN_I = '\uE5E5\uE5E5';
+const OPHIDIAN_J = '\uE5E3\uE5E3';
+const OPHIDIAN_K = '\uE5E1\uE5E1';
+const OPHIDIAN_L = '\uE5E7\uE5E7';
+const OPHIDIAN_M = '\uE5EA';
+const OPHIDIAN_N = '\uE5EB\uE5E9';
+const OPHIDIAN_O = '\uE5E9\uE5EB';
+const OPHIDIAN_P = '\uE5E8';
+const OPHIDIAN_Q = '\uE5EC';
+const OPHIDIAN_R = '\uE5EF\uE5ED';
+const OPHIDIAN_S = '\uE5ED\uE5EF';
+const OPHIDIAN_T = '\uE5EE';
+const OPHIDIAN_U = '\uE5ED\uE5ED';
+const OPHIDIAN_V = '\uE5EB\uE5EB';
+const OPHIDIAN_W = '\uE5E9\uE5E9';
+const OPHIDIAN_X = '\uE5EF\uE5EF';
+const OPHIDIAN_Y = '\uE5F1';
+const OPHIDIAN_Z = '\uE5F0';
+const OPHIDIAN_COMMA = '\uE5FE';
+const OPHIDIAN_PERIOD = '\uE5FF';
+
 const BASIC_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['A', AESC],
     ['B', BEORC],
@@ -91,7 +120,7 @@ const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['NG', ETHEL],
     ['ST', STAN],
     ['TH', THORN],
-    ['EA', EAR]
+    ['EA', EAR],
 ]);
 
 const NOVIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
@@ -99,7 +128,39 @@ const NOVIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['J', IOR],
     ['K', KAUNA],
     ['P', PEORTH],
-    ['S', SOWILO]
+    ['S', SOWILO],
+]);
+
+const OPHIDIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
+    ['A', OPHIDIAN_A],
+    ['B', OPHIDIAN_B],
+    ['C', OPHIDIAN_C],
+    ['D', OPHIDIAN_D],
+    ['E', OPHIDIAN_E],
+    ['F', OPHIDIAN_F],
+    ['G', OPHIDIAN_G],
+    ['H', OPHIDIAN_H],
+    ['I', OPHIDIAN_I],
+    ['J', OPHIDIAN_J],
+    ['K', OPHIDIAN_K],
+    ['L', OPHIDIAN_L],
+    ['M', OPHIDIAN_M],
+    ['N', OPHIDIAN_N],
+    ['O', OPHIDIAN_O],
+    ['P', OPHIDIAN_P],
+    ['Q', OPHIDIAN_Q],
+    ['R', OPHIDIAN_R],
+    ['S', OPHIDIAN_S],
+    ['T', OPHIDIAN_T],
+    ['U', OPHIDIAN_U],
+    ['V', OPHIDIAN_V],
+    ['W', OPHIDIAN_W],
+    ['X', OPHIDIAN_X],
+    ['Y', OPHIDIAN_Y],
+    ['Z', OPHIDIAN_Z],
+
+    ['.', OPHIDIAN_PERIOD],
+    [',', OPHIDIAN_COMMA],
 ]);
 
 interface Token {
@@ -110,7 +171,7 @@ interface Token {
 const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[.:!?]\s*)|(\s+)/gi;
 
 function scan(value: string, regex: RegExp) {
-    if (!regex.global) throw new Error("Scanning must be done with a global regex");
+    if (!regex.global) throw new Error('Scanning must be done with a global regex');
     let match;
     const result = [];
     // tslint:disable-next-line:no-conditional-assignment
@@ -164,6 +225,15 @@ class RuneTranslator {
 
     public static novian() {
         return new RuneTranslator(NOVIAN_RUNE_MAP, new Map());
+    }
+
+    public static ophidian() {
+        let translator = new RuneTranslator(OPHIDIAN_RUNE_MAP, new Map());
+        translator.translateSpace = (token) => token;
+        translator.translatePunctuation = (token) => (token === ',' ? OPHIDIAN_COMMA : OPHIDIAN_PERIOD);
+        translator.trimEndToken = (token) => ['space'].includes(token?.type);
+        translator.trimEndToken = (token) => ['space'].includes(token?.type);
+        return translator;
     }
 
     private trimStartToken: (token: Token) => boolean;

@@ -55,3 +55,11 @@ test("Novian Pangram", ()=> {
 
     expect(result).toBe('ᛏᚻᛖ᛫ᚴᚢᛁᚳᚲ᛫ᛒᚱᚩᚹᚾ᛫ᚠᚩᛣ᛫ᛡᚢᛗᛈᛊ᛫ᚩᚢ︍ᛖᚱ᛫ᛏᚻᛖ᛫ᛚᚫᛉᚣ᛫ᛞᚩᚷ᛫ᛖᚫᛏᛁᚾᚷ᛫ᚻᛁᛊ᛫ᛒᛖᛖᚠ᛫ᛊᛏᛖᚫᚲᛊ');
 })
+
+test("Ophidian Pangram", ()=> {
+    let translator = RuneTranslator.ophidian();
+
+    let result = translator.translate("The quick brown fox jumps over the lazy dog.");
+
+    expect(result).toBe('        ');
+})
