@@ -120,7 +120,7 @@ const SOSARIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['NG', ETHEL],
     ['ST', STAN],
     ['TH', THORN],
-    ['EA', EAR]
+    ['EA', EAR],
 ]);
 
 const NOVIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
@@ -128,7 +128,7 @@ const NOVIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['J', IOR],
     ['K', KAUNA],
     ['P', PEORTH],
-    ['S', SOWILO]
+    ['S', SOWILO],
 ]);
 
 const OPHIDIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
@@ -171,7 +171,7 @@ interface Token {
 const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[.:!?]\s*)|(\s+)/gi;
 
 function scan(value: string, regex: RegExp) {
-    if (!regex.global) throw new Error("Scanning must be done with a global regex");
+    if (!regex.global) throw new Error('Scanning must be done with a global regex');
     let match;
     const result = [];
     // tslint:disable-next-line:no-conditional-assignment
