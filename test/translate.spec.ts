@@ -63,3 +63,11 @@ test("Ophidian Pangram", ()=> {
 
     expect(result).toBe('        ');
 })
+
+test("Ophidian Punctuation", ()=> {
+    let translator = RuneTranslator.ophidian();
+
+    let result = translator.translate("Blah, blah, blah. Test-test.");
+
+    expect(result).toBe('   -');
+})

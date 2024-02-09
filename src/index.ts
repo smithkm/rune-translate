@@ -168,7 +168,7 @@ interface Token {
     value: string;
 }
 
-const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[.:!?]\s*)|(\s+)/gi;
+const TOKEN_REGEXP = /([A-Z0-9'-]+)|(\s*[\-,.:;!?]\s*)|(\s+)/gi;
 
 function scan(value: string, regex: RegExp) {
     if (!regex.global) throw new Error('Scanning must be done with a global regex');
@@ -230,7 +230,22 @@ class RuneTranslator {
     public static ophidian() {
         let translator = new RuneTranslator(OPHIDIAN_RUNE_MAP, new Map());
         translator.translateSpace = (token) => token;
-        translator.translatePunctuation = (token) => (token === ',' ? OPHIDIAN_COMMA : OPHIDIAN_PERIOD);
+        translator.translatePunctuation = (token) => {
+            return token.replace(/[\,\.\!\?\:\;]/g, function(match, offset, string, groups) {
+                switch(match) {
+                case '.':
+                case '!':
+                case '?':
+                case ':':
+                    return OPHIDIAN_PERIOD;
+                case ',':
+                case ';':
+                    return OPHIDIAN_COMMA;
+                default:
+                    return match
+                }
+            });
+        };
         translator.trimEndToken = (token) => ['space'].includes(token?.type);
         translator.trimEndToken = (token) => ['space'].includes(token?.type);
         return translator;
