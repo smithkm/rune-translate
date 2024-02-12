@@ -75,6 +75,18 @@ const OPHIDIAN_W = '\uE5E9\uE5E9';
 const OPHIDIAN_X = '\uE5EF\uE5EF';
 const OPHIDIAN_Y = '\uE5F1';
 const OPHIDIAN_Z = '\uE5F0';
+
+const OPHIDIAN_0 = '\uE5F9\uE5F9';
+const OPHIDIAN_1 = '\uE5F4';
+const OPHIDIAN_2 = '\uE5F5\uE5F3';
+const OPHIDIAN_3 = '\uE5F3\uE5F5';
+const OPHIDIAN_4 = '\uE5F2';
+const OPHIDIAN_5 = '\uE5F6';
+const OPHIDIAN_6 = '\uE5F7\uE5F9';
+const OPHIDIAN_7 = '\uE5F9\uE5F7';
+const OPHIDIAN_8 = '\uE5F8';
+const OPHIDIAN_9 = '\uE5F7\uE5F7';
+
 const OPHIDIAN_COMMA = '\uE5FE';
 const OPHIDIAN_PERIOD = '\uE5FF';
 
@@ -158,6 +170,18 @@ const OPHIDIAN_RUNE_MAP: Map<string, string> = new Map<string, string>([
     ['X', OPHIDIAN_X],
     ['Y', OPHIDIAN_Y],
     ['Z', OPHIDIAN_Z],
+
+    ['0', OPHIDIAN_0],
+    ['1', OPHIDIAN_1],
+    ['2', OPHIDIAN_2],
+    ['3', OPHIDIAN_3],
+    ['4', OPHIDIAN_4],
+    ['5', OPHIDIAN_5],
+    ['6', OPHIDIAN_6],
+    ['7', OPHIDIAN_7],
+    ['8', OPHIDIAN_8],
+    ['9', OPHIDIAN_9],
+    
 
     ['.', OPHIDIAN_PERIOD],
     [',', OPHIDIAN_COMMA],

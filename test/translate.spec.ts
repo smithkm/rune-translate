@@ -71,3 +71,11 @@ test("Ophidian Punctuation", ()=> {
 
     expect(result).toBe('   -');
 })
+
+test("Ophidian numbers", ()=> {
+    let translator = RuneTranslator.ophidian();
+
+    let result = translator.translate("0123456789");
+
+    expect(result).toBe('');
+})
